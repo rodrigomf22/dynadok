@@ -86,16 +86,64 @@ Os testes cobrem:
 
 ## 🔗 Acessos
 
-| Serviço          | URL                        | Credenciais       |
-|------------------|----------------------------|-------------------|
-| API              | http://localhost:3000/api  | -                 |
-| Health Check     | http://localhost:3000/health | -               |
-| Mongo Express    | http://localhost:8081       | admin / pass     |
-| RabbitMQ Console | http://localhost:15672      | admin / admin123 |
+| Serviço          | URL                          | Credenciais       |
+|------------------|------------------------------|-------------------|
+| API              | http://localhost:3000/api    | -                 |
+| Health Check     | http://localhost:3000/health | -                 |
+| Mongo Express    | http://localhost:8081        | admin / pass      |
+| RabbitMQ Console | http://localhost:15672       | admin / admin123  |
 
 ---
 
-## Comandos úteis
+## 📁 Coleção Insomnia
+
+Este projeto contém uma coleção Insomnia para facilitar os testes da API.  
+Você pode importar o arquivo localizado em:
+
+```text
+insomnia/dynadok-api.yaml
+```
+
+Abra o Insomnia, vá em **"Import Data" > "From File"** e selecione o arquivo para carregar os endpoints automaticamente.
+
+---
+
+## 📚 Endpoints disponíveis
+
+### 🔹 `POST localhost:3000/api/clientes`
+
+Cria um novo cliente.
+
+**Body:**
+```json
+{
+  "nome": "João da Silva",
+  "email": "joao@email.com",
+  "telefone": "11999999999"
+}
+```
+
+---
+
+### 🔹 `GET localhost:3000/api/clientes/:id`
+
+Retorna os dados de um cliente pelo ID.
+
+---
+
+### 🔹 `PUT localhost:3000/api/clientes/:id`
+
+Atualiza os dados de um cliente.
+
+---
+
+### 🔹 `GET localhost:3000/health`
+
+Endpoint de verificação da aplicação.
+
+---
+
+## 🧰 Comandos úteis
 
 ### Subir os containers
 
@@ -114,5 +162,3 @@ docker compose -f docker/docker-compose.yml -p dynadok down
 ```bash
 docker compose -f docker/docker-compose.yml -p dynadok up -d --build
 ```
-
----
