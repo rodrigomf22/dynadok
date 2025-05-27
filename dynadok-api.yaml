@@ -1,0 +1,120 @@
+type: collection.insomnia.rest/5.0
+name: Dynadok
+meta:
+  id: wrk_cc2284392f7b4327b2d3581611fce31f
+  created: 1748278183024
+  modified: 1748278183024
+collection:
+  - url: localhost:3000/api/clientes
+    name: Create new cliente
+    meta:
+      id: req_1ad3f058835a420593cba05537ac574a
+      created: 1748278218695
+      modified: 1748348461836
+      isPrivate: false
+      sortKey: -1748278218695
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"nome": "Julio Saraiva",
+        	"email": "julio@gmail.com",
+        	"telefone": "92984082272"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.0.2
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: localhost:3000/api/clientes
+    name: Find All
+    meta:
+      id: req_21d7ef66ff3f426c98b804ccb334bc72
+      created: 1748279662499
+      modified: 1748280307879
+      isPrivate: false
+      sortKey: -1748278218645
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.0.2
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: localhost:3000/api/clientes/6835b4311fb95e58355fd224
+    name: Find By ID
+    meta:
+      id: req_9defde3aad9f43c7abf476fbb0990612
+      created: 1748281301010
+      modified: 1748350013676
+      isPrivate: false
+      sortKey: -1748278218595
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.0.2
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: localhost:3000/api/clientes/6835b4311fb95e58355fd224
+    name: Update
+    meta:
+      id: req_71762e7891084974bb26879468f04143
+      created: 1748283830899
+      modified: 1748350038684
+      isPrivate: false
+      sortKey: -1748278218545
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"nome": "Rod Saraiva",
+        	"email": "julio@gmail.com",
+        	"telefone": "92984082272"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.0.2
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_93978cb703c593c3de3a9dd1722daccafacc2699
+    created: 1748278183027
+    modified: 1748278183027
+environments:
+  name: Base Environment
+  meta:
+    id: env_93978cb703c593c3de3a9dd1722daccafacc2699
+    created: 1748278183026
+    modified: 1748278183026
+    isPrivate: false
