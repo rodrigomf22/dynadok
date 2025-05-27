@@ -125,6 +125,12 @@ Cria um novo cliente.
 
 ---
 
+### 🔹 `GET localhost:3000/api/clientes/`
+
+Retorna os dados de todos os clientes cadastrados.
+
+---
+
 ### 🔹 `GET localhost:3000/api/clientes/:id`
 
 Retorna os dados de um cliente pelo ID.
