@@ -28,7 +28,7 @@ API RESTful para cadastro, consulta e atualização de clientes, com mensageria 
 ### 1. Clone o projeto
 
 ```bash
-git clone https://github.com/seu-usuario/dynadok.git
+git clone https://github.com/rodrigomf22/dynadok.git
 cd dynadok
 ```
 
