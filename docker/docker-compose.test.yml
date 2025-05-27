@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  app-test:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: builder
+    container_name: cliente-api-test
+    environment:
+      - NODE_ENV=test
+      - MONGODB_URI=mongodb://mongodb-test:27017/cliente_test_db
+      - REDIS_HOST=redis-test
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=redis123
+      - RABBITMQ_URL=amqp://admin:admin123@rabbitmq-test:5672
+    depends_on:
+      - mongodb-test
+      - redis-test
+      - rabbitmq-test
+    networks:
+      - test-network
+    volumes:
+      - ./src:/app/src
+      - ./tests:/app/tests
+      - ./coverage:/app/coverage
+    command: npm run test:ci
+    restart: "no"
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  mongodb-test:
+    image: mongo:6.0
+    container_name: cliente-mongodb-test
+    environment:
+      - MONGO_INITDB_DATABASE=cliente_test_db
+    ports:
+      - "27018:27017"
+    networks:
+      - test-network
+    tmpfs:
+      - /data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/cliente_test_db --quiet
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  redis-test:
+    image: redis:7-alpine
+    container_name: cliente-redis-test
+    ports:
+      - "6380:6379"
+    command: redis-server --requirepass redis123
+    networks:
+      - test-network
+    tmpfs:
+      - /data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis123", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  rabbitmq-test:
+    image: rabbitmq:3-management
+    container_name: cliente-rabbitmq-test
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin123
+      - RABBITMQ_DEFAULT_VHOST=/
+    networks:
+      - test-network
+    tmpfs:
+      - /var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  test-network:
+    driver: bridge

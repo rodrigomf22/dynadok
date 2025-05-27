@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: dynadok-api
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/dynadok
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - RABBITMQ_URL=amqp://admin:admin123@rabbitmq:5672
+    depends_on:
+      - mongodb
+      - redis
+      - rabbitmq
+    networks:
+      - dynadok-network
+    restart: unless-stopped
+
+  mongodb:
+    image: mongo:6.0
+    container_name: dynadok-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - dynadok-network
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: dynadok-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - dynadok-network
+    restart: unless-stopped
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: dynadok-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin123
+    networks:
+      - dynadok-network
+    restart: unless-stopped
+
+  mongo-express:
+    image: mongo-express
+    container_name: dynadok-mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_PORT: 27017
+    depends_on:
+      - mongodb
+    networks:
+      - dynadok-network
+    restart: unless-stopped
+
+networks:
+  dynadok-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
